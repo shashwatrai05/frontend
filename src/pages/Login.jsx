@@ -1,7 +1,6 @@
 import React from 'react'
 import { assets } from '../assets/assets'
 import { Star } from 'lucide-react'
-import { SignIn } from '@clerk/clerk-react';
 
 const Login = () => {
   return (
@@ -28,11 +27,10 @@ const Login = () => {
             <h1 className='text-3xl md:text-6xl md:pb-2 bg-gradient-to-r from-indigo-950 to-indigo-800 text-transparent bg-clip-text'>More than just a social media platform</h1>
             <p className='md:mt-6 text-xl md:text-3xl text-indigo-900 max-w-72 md:max-w-md'>Connect, share, and grow your network with Amorzinho - where relationships blossom.</p>
         </div>
-        {/* <span className='md:h-10'>|</span> */}
+        <span className='md:h-10'>|</span>
 
         <div className='flex-1 flex items-center justify-center p-6 sm:p-10'>
             {/* Right Section */}
-            <SignIn />
         </div>
     </div>
 
