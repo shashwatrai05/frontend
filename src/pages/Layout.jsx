@@ -9,7 +9,7 @@ const Layout = () => {
   const user = dummyUserData;
   const [sideBarOpen, setSideBarOpen] = useState(false);
   return user ? (
-    <div className="w-full flex h-screen">
+    <div className="w-full flex h-screen relative">
       <SideBar sideBarOpen={sideBarOpen} setSideBarOpen={setSideBarOpen} />
       <div className="flex-1 bg-slate-50">
         <Outlet />
@@ -25,7 +25,7 @@ const Layout = () => {
           onClick={() => setSideBarOpen(true)}
         />
       )}
-      <h2>Layout</h2>
+      {/* <h2>Layout</h2> */}
     </div>
   ) : (
     <Loading />

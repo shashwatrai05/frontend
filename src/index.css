@@ -9,3 +9,7 @@ h1 {
 body {
   font-family: 'Poppins', sans-serif;
 }
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}

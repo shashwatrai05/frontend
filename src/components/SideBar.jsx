@@ -11,7 +11,7 @@ const SideBar = ({ sideBarOpen, setSideBarOpen }) => {
 
   return (
     <div
-      className={`w-60 xl:w-72 bg-white border-r border-gray-200 flex flex-col justify-between absolute sm:relative top-0 bottom-0 z-20
+      className={`w-60 xl:w-72 bg-white border-r border-gray-200 flex flex-col justify-between absolute sm:relative left-0 top-0 bottom-0 z-20
         transition-all duration-300 ease-in-out
         ${sideBarOpen ? "translate-x-0" : "-translate-x-full sm:translate-x-0"}`}
     >

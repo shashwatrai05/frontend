@@ -1,11 +1,118 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
+import {
+  dummyConnectionsData as ConnectionsData,
+  dummyFollowersData as Followers,
+  dummyFollowingData as Following,
+  dummyPendingConnectionsData as PendingConnections
+} from '../assets/assets';
+import { useNavigate } from 'react-router-dom';
+import { Users, UserCheck, UserPlus, MessageSquare, MessagesSquare } from 'lucide-react';
 
 const Connections = () => {
-  return (
-    <div>
-      <h2>Connections</h2>
-    </div>
-  )
-}
 
-export default Connections
+  const navigate = useNavigate();
+
+  const dataArray = [
+    { label: 'Followers', value: Followers, icon: Users },
+    { label: 'Following', value: Following, icon: UserCheck },
+    { label: 'Pending Connections', value: PendingConnections, icon: UserPlus },
+    { label: 'Connections', value: ConnectionsData, icon: MessageSquare },
+  ];
+
+  const [currentTab, setCurrentTab] = useState('Followers');
+
+  return (
+    <div className='min-h-screen bg-slate-50'>
+      <div className='max-w-6xl mx-auto p-6'>
+
+        {/* Title */}
+        <div className='mb-8'>
+          <h1 className='text-3xl font-bold text-slate-900 mb-2'>Connections</h1>
+          <p className='text-slate-600'>Talk to your little love</p>
+        </div>
+
+        {/* Counts */}
+        <div className='flex gap-4 mb-6'>
+          {dataArray.map((item) => (
+            <div key={item.label} className='flex flex-col items-center justify-center gap-1 border h-20 w-40 border-gray-200 p-6 bg-white shadow rounded-md'>
+              <b>{item.value.length}</b>
+              <p className='text-slate-600'>{item.label}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Tabs */}
+        <div className='inline-flex flex-wrap items-center border border-gray-200 rounded-md p-1 bg-white shadow-sm'>
+          {dataArray.map((tab) => (
+            <button
+              key={tab.label}
+              onClick={() => setCurrentTab(tab.label)}
+              className={`flex items-center gap-1 px-3 py-1 text-sm rounded-md transition-colors 
+                ${currentTab === tab.label
+                  ? 'bg-white font-medium text-black'
+                  : 'text-gray-500 hover:text-black'
+                }`}
+            >
+              <tab.icon className='w-4 h-4' />
+              <span>{tab.label}</span>
+            </button>
+          ))}
+        </div>
+
+        {/* User Cards */}
+        <div className='flex flex-wrap gap-6 mt-6'>
+          {dataArray.find(item => item.label === currentTab)?.value.map((user) => (
+            <div key={user._id} className='w-full max-w-sm flex gap-5 p-6 bg-white shadow rounded-md'>
+              <img src={user.profile_picture} alt="profile" className='rounded-full w-12 h-12 shadow-md mx-auto' />
+
+              <div className='flex-1'>
+                <p className='font-medium text-slate-700'>{user.full_name}</p>
+                <p className='text-slate-500'>@{user.username}</p>
+                <p className='text-sm text-gray-600'>{user.bio.slice(0, 30)}...</p>
+
+                <div className='flex max-sm:flex-col gap-2 mt-4'>
+
+                  <button
+                    onClick={() => navigate(`/profile/${user._id}`)}
+                    className='w-full p-2 text-sm rounded bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 active:scale-95 transition text-white cursor-pointer'
+                  >
+                    View Profile
+                  </button>
+
+                  {/* Unfollow Button */}
+                  {currentTab === 'Following' && (
+                    <button className='w-full p-2 text-sm rounded bg-slate-100 hover:bg-slate-200 active:scale-95 transition cursor-pointer'>
+                      Unfollow
+                    </button>
+                  )}
+
+                  {/* Accept Request Button */}
+                  {currentTab === 'Pending Connections' && (
+                    <button className='w-full p-2 text-sm rounded bg-slate-100 hover:bg-slate-200 active:scale-95 transition cursor-pointer'>
+                      Accept
+                    </button>
+                  )}
+
+                  {/* Message Button */}
+                  {currentTab === 'Connections' && (
+                    <button
+                      onClick={() => navigate(`/messages/${user._id}`)}
+                      className='w-full flex items-center justify-center gap-1 p-2 text-sm rounded bg-slate-100 hover:bg-slate-200 active:scale-95 transition cursor-pointer'
+                    >
+                      <MessagesSquare className='w-4 h-4' />
+                      Message
+                    </button>
+                  )}
+
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+      </div>
+    </div>
+  );
+};
+
+export default Connections;
